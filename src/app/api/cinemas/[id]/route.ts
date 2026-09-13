@@ -24,7 +24,7 @@ export async function GET(
               with: {
                 movie: true,
               },
-              orderBy: (showtimes, { asc }) => [asc(showtimes.startTime)],
+              orderBy: (st: any, { asc }: any) => [asc(st.startTime)],
             },
           },
         },

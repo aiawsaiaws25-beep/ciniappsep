@@ -28,20 +28,20 @@ export async function GET(req: NextRequest) {
           },
         },
       },
-      orderBy: (movies, { desc }) => [desc(movies.ratingScore), desc(movies.releaseDate)],
+      orderBy: (m: any, { desc }: any) => [desc(m.ratingScore), desc(m.releaseDate)],
     });
 
     // Filter by genre slug or format if specified
-    const filtered = allMovies.filter((movie) => {
+    const filtered = allMovies.filter((movie: any) => {
       if (genre) {
-        const hasGenre = movie.movieGenres.some(
-          (mg) => mg.genre.slug === genre || mg.genre.name.toLowerCase() === genre.toLowerCase()
+        const hasGenre = movie.movieGenres?.some(
+          (mg: any) => mg.genre?.slug === genre || mg.genre?.name?.toLowerCase() === genre.toLowerCase()
         );
         if (!hasGenre) return false;
       }
       if (format) {
-        const hasFormat = movie.formats.some(
-          (f) => f.toLowerCase() === format.toLowerCase()
+        const hasFormat = movie.formats?.some(
+          (f: any) => f.toLowerCase() === format.toLowerCase()
         );
         if (!hasFormat) return false;
       }
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     });
 
     const allGenres = await db.query.genres.findMany({
-      orderBy: (genres, { asc }) => [asc(genres.name)],
+      orderBy: (g: any, { asc }: any) => [asc(g.name)],
     });
 
     return NextResponse.json({

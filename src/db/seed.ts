@@ -368,7 +368,7 @@ async function seed() {
           }
         }
       } else {
-        existingSeats.forEach((s) =>
+        existingSeats.forEach((s: any) =>
           seatIdsCreated.push({ id: s.id, rowLabel: s.rowLabel, seatNumber: s.seatNumber })
         );
       }

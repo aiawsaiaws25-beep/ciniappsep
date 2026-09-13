@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import bcrypt from "bcryptjs";
-import QRCode from "qrcode";
-import { v4 as uuidv4 } from "crypto";
+import { randomUUID } from "crypto";
 
 export interface DBData {
   users: any[];

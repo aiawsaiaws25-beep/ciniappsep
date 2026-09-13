@@ -1,7 +1,7 @@
 import { localDB } from "./local-store";
 import * as schema from "./schema";
 import * as dotenv from "dotenv";
-import { v4 as uuidv4 } from "crypto";
+import { randomUUID } from "crypto";
 
 dotenv.config({ path: ".env" });
 

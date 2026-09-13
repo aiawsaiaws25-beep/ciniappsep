@@ -96,7 +96,7 @@ export async function holdSeatsTransaction(params: HoldSeatsParams) {
     }
   }
 
-  return await db.transaction(async (tx) => {
+  return await db.transaction(async (tx: any) => {
     // 1. Fetch showtime and auditorium details
     const showtime = await tx.query.showtimes.findFirst({
       where: and(eq(showtimes.id, showtimeId), eq(showtimes.isActive, true)),
@@ -279,7 +279,7 @@ export async function confirmBookingTransaction(params: ConfirmPaymentParams) {
     cardLast4 = "4242",
   } = params;
 
-  return await db.transaction(async (tx) => {
+  return await db.transaction(async (tx: any) => {
     // 1. Fetch booking
     const booking = await tx.query.bookings.findFirst({
       where: eq(bookings.id, bookingId),
@@ -363,7 +363,7 @@ export async function confirmBookingTransaction(params: ConfirmPaymentParams) {
       .returning();
 
     // 4. Update showtime_seats to BOOKED
-    const seatIds = booking.items.map((i) => i.showtimeSeatId);
+    const seatIds = booking.items.map((i: any) => i.showtimeSeatId);
     if (seatIds.length > 0) {
       await tx
         .update(showtimeSeats)
@@ -440,7 +440,7 @@ export async function confirmBookingTransaction(params: ConfirmPaymentParams) {
 export async function cancelBookingTransaction(params: CancelBookingParams) {
   const { bookingId, userId, isAdmin = false, reason } = params;
 
-  return await db.transaction(async (tx) => {
+  return await db.transaction(async (tx: any) => {
     const booking = await tx.query.bookings.findFirst({
       where: eq(bookings.id, bookingId),
       with: {
@@ -473,7 +473,7 @@ export async function cancelBookingTransaction(params: CancelBookingParams) {
     }
 
     // Release all booked/held seats back to AVAILABLE
-    const seatIds = booking.items.map((i) => i.showtimeSeatId);
+    const seatIds = booking.items.map((i: any) => i.showtimeSeatId);
     if (seatIds.length > 0) {
       await tx
         .update(showtimeSeats)
@@ -535,7 +535,7 @@ export async function releaseExpiredSeatHolds(): Promise<{
 }> {
   const now = new Date();
 
-  return await db.transaction(async (tx) => {
+  return await db.transaction(async (tx: any) => {
     // 1. Find all expired HELD seats
     const expiredSeats = await tx.query.showtimeSeats.findMany({
       where: and(
@@ -548,9 +548,9 @@ export async function releaseExpiredSeatHolds(): Promise<{
       return { releasedSeatsCount: 0, expiredBookingsCount: 0 };
     }
 
-    const expiredSeatIds = expiredSeats.map((s) => s.id);
+    const expiredSeatIds = expiredSeats.map((s: any) => s.id);
     const linkedBookingIds = Array.from(
-      new Set(expiredSeats.map((s) => s.bookingId).filter(Boolean))
+      new Set(expiredSeats.map((s: any) => s.bookingId).filter(Boolean))
     ) as string[];
 
     // 2. Reset seats to AVAILABLE

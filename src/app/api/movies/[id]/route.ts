@@ -31,7 +31,7 @@ export async function GET(
               },
             },
           },
-          orderBy: (showtimes, { asc }) => [asc(showtimes.startTime)],
+          orderBy: (st: any, { asc }: any) => [asc(st.startTime)],
         },
       },
     });

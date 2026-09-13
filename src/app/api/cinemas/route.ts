@@ -12,7 +12,7 @@ export async function GET() {
       with: {
         auditoriums: true,
       },
-      orderBy: (cinemas, { asc }) => [asc(cinemas.city), asc(cinemas.name)],
+      orderBy: (c: any, { asc }: any) => [asc(c.city), asc(c.name)],
     });
 
     return NextResponse.json({ cinemas: allCinemas });

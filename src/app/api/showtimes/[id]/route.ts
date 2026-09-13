@@ -23,7 +23,7 @@ export async function GET(
             cinema: true,
             seats: {
               where: eq(seats.isActive, true),
-              orderBy: (seats, { asc }) => [asc(seats.rowLabel), asc(seats.seatNumber)],
+              orderBy: (s: any, { asc }: any) => [asc(s.rowLabel), asc(s.seatNumber)],
             },
           },
         },
@@ -52,7 +52,7 @@ export async function GET(
       });
     }
 
-    const seatMatrix = showtime.auditorium.seats.map((seat) => {
+    const seatMatrix = showtime.auditorium.seats.map((seat: any) => {
       const liveState = statusMap.get(seat.id) || {
         status: "AVAILABLE",
         heldUntil: null,

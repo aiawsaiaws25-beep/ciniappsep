@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (auditoriumSeats.length > 0) {
-      const seatsPayload = auditoriumSeats.map((s) => ({
+      const seatsPayload = auditoriumSeats.map((s: any) => ({
         showtimeId: newShowtime.id,
         seatId: s.id,
         status: "AVAILABLE" as const,
